@@ -1,15 +1,15 @@
 package com.gmail.yoshzawa.h28jk3aopenidtest.jwt;
 
-public class OpenIdHeader {
+public class JwtHeader {
 	private String typ;
 	private String alg;
 	private String kid;
 
-	public OpenIdHeader() {
+	public JwtHeader() {
 		this(null, null, null);
 	}
 
-	public OpenIdHeader(String typ, String alg, String kid) {
+	public JwtHeader(String typ, String alg, String kid) {
 		setTyp(typ);
 		setAlg(alg);
 		setKid(kid);

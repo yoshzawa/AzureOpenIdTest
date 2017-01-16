@@ -2,7 +2,7 @@ package com.gmail.yoshzawa.h28jk3aopenidtest.jwt;
 
 import java.util.Date;
 
-public class OpenIdPayload {
+public class JwtPayload {
 	private String aud;
 	private String iss;
 	private String iat;
@@ -16,7 +16,7 @@ public class OpenIdPayload {
 	private String tid;
 	private String ver;
 
-	public OpenIdPayload(String aud, String iss, String iat, String nbf,
+	public JwtPayload(String aud, String iss, String iat, String nbf,
 			String exp, String name, String nonce, String oid,
 			String preferred_username, String sub, String tid, String ver) {
 		setAud(aud);
@@ -34,7 +34,7 @@ public class OpenIdPayload {
 
 	}
 
-	public OpenIdPayload() {
+	public JwtPayload() {
 		this(null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 

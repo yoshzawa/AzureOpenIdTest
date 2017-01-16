@@ -8,8 +8,8 @@ import javax.servlet.http.*;
 
 import org.apache.geronimo.mail.util.Base64;
 
-import com.gmail.yoshzawa.h28jk3aopenidtest.jwt.OpenIdHeader;
-import com.gmail.yoshzawa.h28jk3aopenidtest.jwt.OpenIdPayload;
+import com.gmail.yoshzawa.h28jk3aopenidtest.jwt.JwtHeader;
+import com.gmail.yoshzawa.h28jk3aopenidtest.jwt.JwtPayload;
 import com.google.gson.Gson;
 
 @SuppressWarnings("serial")
@@ -37,7 +37,7 @@ public class MicrosoftRedirectServlet extends HttpServlet implements
 		resp.getWriter().println("head = " + head);
 		Gson gson = new Gson();
 		try {
-			OpenIdHeader header = gson.fromJson(head, OpenIdHeader.class);
+			JwtHeader header = gson.fromJson(head, JwtHeader.class);
 			resp.getWriter().println("typ = " + header.getTyp());
 			resp.getWriter().println("alg = " + header.getAlg());
 			resp.getWriter().println("kid = " + header.getKid());
@@ -62,8 +62,8 @@ public class MicrosoftRedirectServlet extends HttpServlet implements
 
 			String payload = new String(Base64.decode(s));
 			resp.getWriter().println("payload = " + payload);
-			OpenIdPayload body = gson.fromJson(payload + "",
-					OpenIdPayload.class);
+			JwtPayload body = gson.fromJson(payload + "",
+					JwtPayload.class);
 			resp.getWriter().println("aud = " + body.getAud());
 			resp.getWriter().println("iss = " + body.getIss());
 			resp.getWriter().println("iat = " + body.getIat());

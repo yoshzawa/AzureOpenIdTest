@@ -127,5 +127,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-1.0-sdk-1.9.34.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
