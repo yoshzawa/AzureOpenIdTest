@@ -1,4 +1,4 @@
-package com.gmail.yoshzawa.h28jk3aopenidtest;
+package com.gmail.yoshzawa.h28jk3aopenidtest.ofy;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
