@@ -35,8 +35,6 @@ public class MicrosoftRedirectServlet extends HttpServlet implements AzureConsta
 		String payload = new String(Base64.decode(tokens[1]));
 		resp.getWriter().println("payload = " + payload);
 
-		String signature = new String(Base64.decode(tokens[2]));
-		resp.getWriter().println("signature = " + signature);
 
 		}catch (Exception e){}
 		
