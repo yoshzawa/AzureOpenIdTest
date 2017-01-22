@@ -84,7 +84,8 @@ public class MicrosoftRedirectServlet extends HttpServlet implements
 		HttpSession session = req.getSession();
 		session.setAttribute("email", email);
 		
-		
+		resp.getWriter().println("<a href='/login/'>Continue</a>");
+
 		
 	}
 }
