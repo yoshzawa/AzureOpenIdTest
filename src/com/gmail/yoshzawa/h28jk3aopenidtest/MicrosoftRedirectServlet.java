@@ -12,18 +12,21 @@ import com.gmail.yoshzawa.h28jk3aopenidtest.ofy.UserAccount;
 import com.google.gson.Gson;
 
 import javax.servlet.http.*;
+import java.util.logging.Logger;
 
 @SuppressWarnings("serial")
 public class MicrosoftRedirectServlet extends HttpServlet implements
 		AzureConstant {
-	
+	private static final Logger log = Logger
+			.getLogger(MicrosoftRedirectServlet.class.getName());
+
 	static {
 		UserAccount.ofyInit();
 	}
+
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello, world");
+		resp.setContentType("text/html");
 
 		String id_token = req.getParameter("id_token");
 		String state = req.getParameter("state");
@@ -31,20 +34,19 @@ public class MicrosoftRedirectServlet extends HttpServlet implements
 		String error_description = req.getParameter("error_description");
 
 		String[] tokens = id_token.split("\\.");
-		resp.getWriter().println("split = " + tokens.length);
 
-		resp.getWriter().println("id_token = " + id_token);
-		resp.getWriter().println("state = " + state);
-		resp.getWriter().println("error = " + error);
-		resp.getWriter().println("error_description = " + error_description);
+		log.info("id_token = " + id_token);
+		log.info("state = " + state);
+		log.info("error = " + error);
+		log.info("error_description = " + error_description);
 
 		String head = new String(Base64.decode(tokens[0]));
-		resp.getWriter().println("head = " + head);
+		log.info("head = " + head);
 		Gson gson = new Gson();
 		JwtHeader header = gson.fromJson(head, JwtHeader.class);
-		resp.getWriter().println("typ = " + header.getTyp());
-		resp.getWriter().println("alg = " + header.getAlg());
-		resp.getWriter().println("kid = " + header.getKid());
+		log.info("typ = " + header.getTyp());
+		log.info("alg = " + header.getAlg());
+		log.info("kid = " + header.getKid());
 
 		String s = tokens[1];
 		switch (s.length() % 4) {
@@ -62,30 +64,29 @@ public class MicrosoftRedirectServlet extends HttpServlet implements
 		}
 
 		String payload = new String(Base64.decode(s));
-		resp.getWriter().println("payload = " + payload);
+		log.info("payload = " + payload);
 		JwtPayload body = gson.fromJson(payload + "", JwtPayload.class);
-		resp.getWriter().println("aud = " + body.getAud());
-		resp.getWriter().println("iss = " + body.getIss());
-		resp.getWriter().println("iat = " + body.getIat());
-		resp.getWriter().println("nbf = " + body.getNbf());
-		resp.getWriter().println("name = " + body.getName());
-		resp.getWriter().println("exp = " + body.getExp());
-		resp.getWriter().println("nonce = " + body.getNonce());
-		resp.getWriter().println("oid = " + body.getOid());
+		log.info("aud = " + body.getAud());
+		log.info("iss = " + body.getIss());
+		log.info("iat = " + body.getIat());
+		log.info("nbf = " + body.getNbf());
+		log.info("name = " + body.getName());
+		log.info("exp = " + body.getExp());
+		log.info("nonce = " + body.getNonce());
+		log.info("oid = " + body.getOid());
 		String email = body.getPreferredUsername();
-		resp.getWriter().println(
-				"preferred_username = " + email);
-		resp.getWriter().println("sub = " + body.getSub());
-		resp.getWriter().println("tid = " + body.getTid());
-		resp.getWriter().println("ver = " + body.getVer());
+		log.info("preferred_username = " + email);
+		log.info("sub = " + body.getSub());
+		log.info("tid = " + body.getTid());
+		log.info("ver = " + body.getVer());
 
 		UserAccount user = new UserAccount(email);
 		user.save();
 		HttpSession session = req.getSession();
 		session.setAttribute("email", email);
-		
+
+		resp.getWriter().println("<H1>Welcome," + email+"</h1>");
 		resp.getWriter().println("<a href='/login/'>Continue</a>");
 
-		
 	}
 }
